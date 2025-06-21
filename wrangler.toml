@@ -40,3 +40,6 @@ TARGET_UPSTREAM = ""
 
 [assets]
 directory = "./dist"
+
+[observability.logs]
+enabled = false
