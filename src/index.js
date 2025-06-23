@@ -5,20 +5,16 @@ addEventListener("fetch", (event) => {
 
 const dockerHub = "https://registry-1.docker.io";
 
-const routes = {
-  // production
-  ["docker." + CUSTOM_DOMAIN]: dockerHub,
-  ["quay." + CUSTOM_DOMAIN]: "https://quay.io",
-  ["gcr." + CUSTOM_DOMAIN]: "https://gcr.io",
-  ["k8s-gcr." + CUSTOM_DOMAIN]: "https://k8s.gcr.io",
-  ["k8s." + CUSTOM_DOMAIN]: "https://registry.k8s.io",
-  ["ghcr." + CUSTOM_DOMAIN]: "https://ghcr.io",
-  ["cloudsmith." + CUSTOM_DOMAIN]: "https://docker.cloudsmith.io",
-  ["ecr." + CUSTOM_DOMAIN]: "https://public.ecr.aws",
+// --- 修改开始 ---
+// 您的 Worker 默认域名，例如 "your-worker-name.your-username.workers.dev"
+// 您需要在部署时将其替换为您实际的 Worker 域名
+// 注意：这里不需要 / 结尾，因为 routeByHosts 函数会直接匹配 host
+const WORKER_DEFAULT_HOST = "cloudflare-docker-proxy.alexanderpanxh.workers.dev"; // <--- 请替换为您的 Worker 实际域名
 
-  // staging
-  ["docker-staging." + CUSTOM_DOMAIN]: dockerHub,
+const routes = {
+  [WORKER_DEFAULT_HOST]: dockerHub,
 };
+// --- 修改结束 ---
 
 function routeByHosts(host) {
   if (host in routes) {
